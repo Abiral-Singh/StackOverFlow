@@ -1,7 +1,5 @@
 package com.example.stackoverflow;
 
-import android.util.Log;
-
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -11,12 +9,12 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 
 public class HttpHandler {
     ArrayList<String> tags = new ArrayList<String>();
-    ArrayList<String> searchTags;
-    ArrayList<String> posts;
+    ArrayList<String> posts = new ArrayList<String>();
 
     ArrayList<String> getTags() throws Exception {
         URL url = new URL("https://api.stackexchange.com/2.2/tags?order=desc&sort=popular&site=stackoverflow");
@@ -61,7 +59,7 @@ public class HttpHandler {
         for (int i=0; i<searchTags.size();i++){
             search=search + searchTags.get(i)+";";
         }
-            URL url = new URL("https://api.stackexchange.com/2.2/questions?order=desc&sort=activity&tagged=" + search+ "&site=stackoverflow");
+        URL url = new URL("https://api.stackexchange.com/2.2/questions?order=desc&sort=activity&tagged=" + URLEncoder.encode(search,"utf-8")+ "&site=stackoverflow");
         URLConnection conn = (HttpURLConnection) url.openConnection();
         conn.addRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3359.181 Safari/537.36");
         conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");

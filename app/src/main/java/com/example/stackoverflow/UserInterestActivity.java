@@ -1,13 +1,14 @@
 package com.example.stackoverflow;
 
+import android.content.Intent;
 import android.os.AsyncTask;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -33,6 +34,21 @@ public class UserInterestActivity extends AppCompatActivity {
 
         //Linear layout
         linearLayout = findViewById(R.id.user_interest_linear_layout);
+
+        //submit button
+        Button submitButton= findViewById(R.id.submit_tags);
+        submitButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(userTagList.size()!=4){
+                    Toast.makeText(getApplicationContext(), "Select 4 tags", Toast.LENGTH_SHORT).show();
+                }else{
+                    Intent i = new Intent(getApplicationContext(),QuestionListActivity.class);
+                    i.putExtra("array_list",userTagList);
+                    startActivity(i);
+                }
+            }
+        });
     }
 
     public class HttpRequestTag extends AsyncTask<Void, Integer, ArrayList<String>> {
